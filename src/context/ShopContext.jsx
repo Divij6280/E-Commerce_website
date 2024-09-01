@@ -1,6 +1,8 @@
 import React, { createContext, useState } from "react";
 import all_product from '../components/assets/all_product'
 
+import {  toast } from 'react-toastify';
+
 export const ShopContext = createContext(
     {all_product:[{}]}
 );
@@ -14,11 +16,13 @@ const getDefaultCart = ()=>{
 }
 
 const ShopContextProvider = (props) => {
+    
 
     const [cartItems,setCartItems] = useState(getDefaultCart());
 
     const addToCart = (itemId) => {
         setCartItems((prev)=>({...prev , [itemId] : prev[itemId] + 1}));
+        toast.success("Item Added to Cart successfully!")
         console.log(cartItems);
     }
 
