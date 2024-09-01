@@ -17,7 +17,7 @@ export const footer = () => {
             <li>Products</li>
             <li>Offices</li>
             <li>About</li>
-            <li>Contact Us</li>
+            <li>Contact</li>
         </ul>
         <div className="footer-social-icon">
             <div className="footer-icon-container">
