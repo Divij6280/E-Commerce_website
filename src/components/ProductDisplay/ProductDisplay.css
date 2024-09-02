@@ -87,8 +87,8 @@
     cursor: pointer;
 }
 
-.productdisplay-right button:hover{
-    background: rgb(207, 18, 18)
+.productdisplay-right button:active{
+    background: rgb(117, 83, 149)
 }
 
 .productdisplay-right-category{
