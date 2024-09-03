@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import './CartItems.css'
 import {ShopContext} from '../../context/ShopContext'
 import remove_icon from '../assets/cart_cross_icon.png'
+import { ToastContainer } from 'react-toastify';
 
 const CartItems = () => {
     const {getTotalCartAmount,all_product,cartItems,removeFromCart} = useContext(ShopContext)
@@ -32,6 +33,7 @@ const CartItems = () => {
             }
             return null;
         })}
+        <ToastContainer position='bottom-right'/>
         <div className="cartitems-down">
             <div className="cartitems-total">
                 <h1>Cart Totals</h1>
