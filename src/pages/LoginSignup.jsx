@@ -5,7 +5,7 @@ import { toast, ToastContainer } from 'react-toastify';
 
 const LoginSignup=()=>{
 
-    const [state,setState] = useState("Login");
+    const [state,setState] = useState("Sign In");
     const [formData,setFormData] = useState({
         username:"",
         password:"",
@@ -16,8 +16,8 @@ const LoginSignup=()=>{
         setFormData({...formData,[e.target.name] : e.target.value})
     }
 
-    const login = async ()=>{
-        console.log("Login Function Executed",formData);
+    const signin = async ()=>{
+        console.log("Signin Function Executed",formData);
         let responseData;
         await fetch('http://localhost:4000/login',{
             method:'POST',
@@ -60,23 +60,48 @@ const LoginSignup=()=>{
     }
 
     return(
-        <div className="loginsignup">
-             <div className="loginsignup-container">
-                <h1>{state}</h1>
-                <div className="loginsignup-fields">
-                    {state==="Sign Up"?<input name="username" value={formData.username} onChange={changeHandler} type="text" placeholder="Enter Your Name" /> : <></>} 
-                    <input name="email" value={formData.email} onChange={changeHandler} type="email" placeholder="Enter Your Email Address" />
-                    <input name="password" value={formData.password} onChange={changeHandler} type="password" placeholder="Enter Your Password" />
+
+        <div className="bodylogin">
+            <div className="container" id="container">
+                <div className="form-container sign-in">
+                    <form>
+                        <h1>{state}</h1>
+                        {state==="Sign Up"?<input name="username" value={formData.username}
+                        onChange={changeHandler} type="text" placeholder="Enter Your Name" /> : <></>} 
+
+                        <input name="email" value={formData.email} onChange={changeHandler} 
+                        type="password" placeholder="Enter Your Email" />
+
+                        <input name="password" value={formData.password} onChange={changeHandler}
+                        type="email" placeholder="Enter Your Password" />
+
+                        <button onClick={()=>{state==="Sign Up"?signup():signin()}}>{state}</button>
+
+                    </form>
                 </div>
-                <button onClick={()=>{state==="Login"?login():signup()}}>Continue</button>
-                {state==="Sign Up" ? <p className="loginsignup-login">Already have an account? <span onClick={()=>{setState("Login")}}> Login Here </span></p> : 
-                <p className="loginsignup-login">Create an account? <span onClick={()=>{setState("Sign Up")}}> Click Here </span></p>}
-                <div className="loginsignup-agree">
-                    <input type="checkbox" name='' id='' required/>
-                    <p>By continuing , I agree to the terms of use and privacy policy</p>
+
+
+                <div className="toggle-container">
+                    <div className="toggle">
+                        {state === "Sign Up" ?
+                            <div className="toggle-panel toggle-left">
+                                <h1>Welcome Back!</h1>
+                                <p>Enter your personal details to use all of the site features</p>
+                                <button className="hidden" id="login" onClick={()=>{setState("Sign In")}}>Sign In</button>
+                            </div>
+                        :
+                            <div className="toggle-panel toggle-right">
+                                <h1>Hello,Friends</h1>
+                                <p>Register your personal details to use all of the site features</p>
+                                <button className="hidden" id="login" onClick={()=>{setState("Sign Up")}}>Sign Up</button>
+                            </div>
+                        }
+                        
+                    </div>
                 </div>
-             </div>
-             <ToastContainer position="top-center"/>
+
+                <ToastContainer position="top-center"/>
+            </div> 
         </div>
         
     )

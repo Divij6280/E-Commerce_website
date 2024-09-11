@@ -26,7 +26,7 @@ export const Navbar = () => {
             </div>
             <img className='nav-dropdown' onClick={dropdown_toggle} src={nav_dropdown} alt="" />
             <ul ref={menuRef} className='nav-menu'>
-                <li onClick={()=>{setMenu("shop")}}><Link style={{textDecoration:'none'}} to='/'>SHOP</Link>{menu==="shop"?<hr/>:<></>}</li>
+                <li onClick={()=>{setMenu("shop")}}><Link style={{textDecoration:'none'}} to='/'>HOME</Link>{menu==="shop"?<hr/>:<></>}</li>
                 <li onClick={()=>{setMenu("mens")}}><Link style={{textDecoration:'none'}} to='/mens'>MEN</Link>{menu==="mens"?<hr/>:<></>}</li>
                 <li onClick={()=>{setMenu("womens")}}><Link style={{textDecoration:'none'}} to='/womens'>WOMEN</Link>{menu==="womens"?<hr/>:<></>}</li>
                 <li onClick={()=>{setMenu("kids")}}><Link style={{textDecoration:'none'}} to='/kids'>KID</Link>{menu==="kids"?<hr/>:<></>}</li>
@@ -34,7 +34,7 @@ export const Navbar = () => {
             <div className='nav-login-cart'>
                 {localStorage.getItem('auth-token')?
                 <button onClick={()=>{localStorage.removeItem('auth-token');window.location.replace('/')}}>LOGOUT</button>
-                :<Link to='/login'><button>LOGIN</button></Link>}
+                :<Link to='/login'><button>SIGN IN</button></Link>}
                 <Link to='/cart'><img src={cart_icon} alt="Cart"/></Link>
                 <div className='nav-cart-count'>{getTotalCartItems()}</div> 
             </div>
