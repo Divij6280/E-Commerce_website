@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 # Ignore node_modules in both frontend and backend 
 /FrontEnd/node_modules/ 
 /Backend/node_modules/ 
 
 # Ignore .env file in backend 
 /Backend/.env
+=======
+/node_modules
+>>>>>>> origin/main
