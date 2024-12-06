@@ -25,7 +25,7 @@ const PlaceOrder = () => {
       </div>
 
       <div className='main'>
-        <div>
+        <div className='billing-address'>
           <form className="placeorder-form">
             <h3>Billing Address</h3>
             <div className="form-row">
@@ -39,9 +39,11 @@ const PlaceOrder = () => {
                 <label>Address 1:</label>
                 <input type="text" name="address1" required />
               </div>
+            </div>
+            <div className="form-row">
               <div className="form-group">
                 <label>Address 2:</label>
-                <input type="text" name="address2" />
+                <input type="text" name="address2" required />
               </div>
             </div>
             <div className="form-row">
@@ -49,34 +51,36 @@ const PlaceOrder = () => {
                 <label>City:</label>
                 <input type="text" name="city" required />
               </div>
-              <div className="form-group">
-                <label>State:</label>
-                <select name="state" required className="scrollable-select">
-                  <option value="">Select State</option>
-                  <option value="state1">Punjab</option>
-                  <option value="state2">Haryana</option>
-                  <option value="state3">Chandigarh</option>
-                  <option value="state4">Delhi</option>
-                  <option value="state5">Uttarakhand</option>
-                  <option value="state6">Sikkim</option>
-                  <option value="state7">Uttar Pradesh</option>
-                  <option value="state8">Odisha</option>
-                  <option value="state9">Goa</option>
-                  <option value="state10">Maharashtra</option>
-                  <option value="state11">Karnataka</option>
-                  <option value="state12">Kerala</option>
-                  <option value="state13">Himachal Pradesh</option>
-                  <option value="state14">Gujarat</option>
-                  <option value="state15">Assam</option>
-                  <option value="state16">Andhra Pradesh</option>
-                  <option value="state17">Arunachal Pradesh</option>
-                  <option value="state18">West Bengal</option>
-                </select>
-              </div>
-              <div className="form-group">
-                <label>Zip Code:</label>
-                <input type="text" name="zip" required />
-              </div>
+            </div>
+            <div className="form-row">
+              <div className="form-group-again">
+                  <label>State:</label>
+                  <select name="state" required className="scrollable-select">
+                    <option value="">Select State</option>
+                    <option value="state1">Punjab</option>
+                    <option value="state2">Haryana</option>
+                    <option value="state3">Chandigarh</option>
+                    <option value="state4">Delhi</option>
+                    <option value="state5">Uttarakhand</option>
+                    <option value="state6">Sikkim</option>
+                    <option value="state7">Uttar Pradesh</option>
+                    <option value="state8">Odisha</option>
+                    <option value="state9">Goa</option>
+                    <option value="state10">Maharashtra</option>
+                    <option value="state11">Karnataka</option>
+                    <option value="state12">Kerala</option>
+                    <option value="state13">Himachal Pradesh</option>
+                    <option value="state14">Gujarat</option>
+                    <option value="state15">Assam</option>
+                    <option value="state16">Andhra Pradesh</option>
+                    <option value="state17">Arunachal Pradesh</option>
+                    <option value="state18">West Bengal</option>
+                  </select>
+                </div>
+                <div className="form-group-again">
+                  <label>Zip Code:</label>
+                  <input type="text" name="zip" required />
+                </div>
             </div>
           </form>
         </div>
