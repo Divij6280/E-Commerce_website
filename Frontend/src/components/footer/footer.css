@@ -1,0 +1,144 @@
+.footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    background-color: #fff;
+    color: #1a1a1a;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.footer-logo p {
+    color: #383838;
+    font-size: 45px;
+    font-weight: 700;
+    transition: color 0.3s;
+}
+
+.footer-links {
+    display: flex;
+    list-style: none;
+    gap: 60px;
+    color: #252525;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.footer-links li {
+    cursor: pointer;
+}
+
+.footer-social-icon {
+    display: flex;
+    gap: 20px;
+}
+
+.footer-social-icon img {
+    height: 25px;
+    width: 25px;
+}
+
+.footer-icon-container {
+    padding: 10px;
+    padding-bottom: 6px;
+    background: #fbfbfb;
+    border: 1px solid #ebebeb;
+    border-radius: 50%;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.footer-icon-container:hover {
+    background: #ff2f2f;
+}
+
+.footer-copyright {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    width: 100%;
+    margin-bottom: 30px;
+    color: #1a1a1a;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+.footer-copyright hr {
+    width: 80%;
+    border: none;
+    border-radius: 10px;
+    height: 2px;
+    background: #c7c7c7;
+    transition: background-color 0.3s;
+}
+
+/* Dark Mode Styles */
+body.dark-mode .footer {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+body.dark-mode .footer-logo p {
+    color: #e0e0e0;
+}
+
+body.dark-mode .footer-links {
+    color: #e0e0e0;
+}
+
+body.dark-mode .footer-icon-container {
+    background: #444;
+    border-color: #666;
+}
+
+body.dark-mode .footer-icon-container:hover {
+    background: #ff2f2f;
+}
+
+body.dark-mode .footer-copyright {
+    color: #e0e0e0;
+}
+
+body.dark-mode .footer-copyright hr {
+    background: #444;
+}
+
+/* Media Queries */
+@media(max-width:800px) {
+    .footer {
+        gap: 20px;
+    }
+
+    .footer-logo {
+        gap: 10px;
+        align-items: end;
+    }
+
+    .footer-logo img {
+        width: 40px;
+    }
+
+    .footer-logo p {
+        font-size: 25px;
+    }
+
+    .footer-links {
+        font-size: 14px;
+        gap: 10px;
+    }
+
+    .footer-social-icon img {
+        width: 22px;
+    }
+
+    .footer-copyright {
+        font-size: 13px;
+    }
+}
