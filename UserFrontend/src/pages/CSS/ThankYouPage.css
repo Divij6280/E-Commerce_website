@@ -49,11 +49,11 @@ h1 {
 }
 
 .order-summary {
-    background-color: #f9f9f9;
+    background-color: #f5f0f0;
     padding: 30px;
     border-radius: 10px;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
-    margin: 20px 0;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.25);
+    margin: 50px 0;
 }
 
 .order-summary h2 {
@@ -61,6 +61,7 @@ h1 {
     margin-bottom: 20px;
     font-size: 1.8em;
     font-weight: 600;
+    text-decoration: underline;
 }
 
 .order-summary ul {
@@ -117,6 +118,16 @@ h1 {
 .go-back-button:hover {
     background-color: #0056b3;
     transform: scale(1.05);
+}
+
+body.dark-mode .thank-you-container h1{
+    color: #333;
+}
+body.dark-mode .order-summary h2{
+    color:#333
+}
+body.dark-mode .order-total h3{
+    color:#333;
 }
 
 /* Media Queries */

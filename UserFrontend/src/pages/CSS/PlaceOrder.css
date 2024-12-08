@@ -133,6 +133,14 @@
   background-color: #0056b3;
 }
 
+body.dark-mode .placeorder-container h2{
+  color: #333;
+}
+
+body.dark-mode .placeorder-form h3{
+  color: #333;
+}
+
 @media (max-width: 768px) {
   .main {
     flex-direction: column;

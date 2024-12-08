@@ -6,7 +6,6 @@ import { ShopContext } from '../../context/ShopContext';
 import { useTheme } from '../../context/ThemeContext';
 import nav_dropdown from '../assets/nav_dropdown.png';
 import { FiSun, FiMoon, FiShoppingCart } from 'react-icons/fi';
-import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export const Navbar = () => {
@@ -16,6 +15,11 @@ export const Navbar = () => {
     const menuRef = useRef(null);
     const navigate = useNavigate();
     const location = useLocation();
+
+
+    const totalItems=getTotalCartItems()
+
+
 
     useEffect(() => {
         const path = location.pathname.split('/')[1];
@@ -30,24 +34,24 @@ export const Navbar = () => {
         localStorage.removeItem('auth-token');
         setMenu("shop");
         navigate('/');
-        toast.success("You have successfully logged out", {
-            position: "top-center",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-        });
+        // toast.success("You have successfully logged out", {
+        //     position: "top-center",
+        //     autoClose: 1000,
+        //     hideProgressBar: false,
+        //     closeOnClick: true,
+        // });
     };
 
     const handleThemeToggle = () => {
         toggleDarkMode();
-        const themeMessage = darkMode ? "Light Theme" : "Dark Theme";
-        toast.success(themeMessage, {
-            position: "top-center",
-            autoClose: 50,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true
-        });
+        // const themeMessage = darkMode ? "Light Theme" : "Dark Theme";
+        // toast.success(themeMessage, {
+        //     position: "top-center",
+        //     autoClose: 50,
+        //     hideProgressBar: false,
+        //     closeOnClick: true,
+        //     pauseOnHover: true
+        // });
     };
 
     useEffect(() => {
@@ -108,9 +112,9 @@ export const Navbar = () => {
                             <button onClick={handleLogout} aria-label="Logout">LOGOUT</button>
                             <Link to="/cart" aria-label="Cart" className="cart-icon-container">
                                 <FiShoppingCart className="cart-icon" />
-                                {getTotalCartItems() > 0 && (
-                                    <div className="nav-cart-count">{getTotalCartItems()}</div>
-                                )}
+                                {totalItems && totalItems> 0 ? (
+                                    <div className="nav-cart-count">{totalItems}</div>
+                                ):null}
                             </Link>
                         </>
                     ) : (

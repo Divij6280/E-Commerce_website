@@ -60,9 +60,12 @@
 .productdisplay-right-price-new{
     color: #ff4141;
 }
-.productdisplay-right-size{
-    margin-bottom: 30px;
+.size-error{
+    color: red;
+    text-align: left;
+    font-size: 13px;
 }
+
 .productdisplay-right-size h1{
     margin-top: 30px;
     color: #656565;
@@ -72,7 +75,6 @@
 }
 .productdisplay-right-sizes{
     display: flex;
-    margin: 10px 0px;
     gap: 10px;
 }
 .size-button{
@@ -82,7 +84,19 @@
     border-radius: 3px;
     cursor: pointer;
 }
-
+.highlighted-size-button{
+    padding: 10px 15px;
+    background: rgb(169, 85, 247);
+    color:white;
+    border: 1px solid #ebebeb;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.sizes-container{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
 .size-button:hover{
     background: rgb(169, 85, 247);
     color: white;
@@ -104,7 +118,7 @@
     font-weight: 500;
     color: white;
     background: blueviolet;
-    margin-top: 10px;
+    margin-top: 40px;
     margin-bottom: 50px;
     border: none;
     outline: none;

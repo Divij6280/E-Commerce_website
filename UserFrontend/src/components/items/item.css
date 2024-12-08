@@ -43,8 +43,11 @@
     text-decoration: line-through;
 }
 
+body.dark-mode .item-name{
+    color: black;
+}
 body.dark-mode .item-price-new {
-    color: whitesmoke;
+    color: black;
 }
 
 @media(max-width:1280px) {
