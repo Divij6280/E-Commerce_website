@@ -13,7 +13,10 @@ import kid_banner from './components/assets/banner_kids.png';
 import 'react-toastify/dist/ReactToastify.css';
 import PlaceOrder from './pages/PlaceOrder';  // Import PlaceOrder component
 
+
 function App() {
+
+
   return (
     <BrowserRouter>
       <div className="App">
@@ -29,6 +32,7 @@ function App() {
           <Route path='/cart' element={<Cart />} />
           <Route path='/login' element={<LoginSignup />} />
           <Route path='/placeorder' element={<PlaceOrder />} /> {/* Add this line for PlaceOrder route */}
+         
         </Routes>
         <Footer />
       </div>
