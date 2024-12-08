@@ -2,18 +2,16 @@ const express = require("express");
 const router = express.Router();
 const Product = require("../models/product");
 
-// Endpoint to add a new product
 
+// Endpoint to add a new product
 router.post('/add', async (req, res) => {
   try {
     const { name, category, image_url, new_price, old_price } = req.body;
-    if (!name || !category || !image_url || !new_price || !old_price) {
+    if (!name || !category || !image || !new_price || !old_price) {
       return res.status(400).json({ errors: "Please provide all required fields" });
     }
-    const newProduct = await Product.create({ name, category, image_url, new_price, old_price });
-
+    const newProduct = await Product.create({ name, category, image_url, new_price, old_price })
     res.status(201).json({ success: true, message: "Product added successfully", product: newProduct });  
-
   } 
   catch (error) {
     console.error("Error adding product:", error);
@@ -34,6 +32,8 @@ router.get('/', async (req, res) => {
   }
 });
 
+
+
 // Endpoint to get a single product by ID 
 router.get('/:id', async (req, res) => {
   try {
@@ -48,6 +48,7 @@ router.get('/:id', async (req, res) => {
     res.status(500).json({ errors: "Internal Server Error" });
   }
 });
+
 
 // Endpoint to update a product by ID 
 router.put('/:id', async (req, res) => {
@@ -65,6 +66,7 @@ router.put('/:id', async (req, res) => {
     res.status(500).json({ errors: "Internal Server Error" });
   }
 });
+
 
 // Endpoint to update a single thing in product by ID (Patch)
 router.patch('/:id', async (req, res) => {
@@ -98,5 +100,6 @@ router.delete('/:id', async (req, res) => {
     res.status(500).json({ errors: "Internal Server Error" });
   }
 });
+
 
 module.exports = router;

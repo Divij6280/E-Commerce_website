@@ -1,18 +1,19 @@
-import React, { useContext, useState } from 'react';
-import './ProductDisplay.css';
-import star_icon from "../assets/star_icon.png";
-import star_dull_icon from '../assets/star_dull_icon.png';
-import { ShopContext } from '../../context/ShopContext';
+import React, { useContext, useState } from 'react'
+import './ProductDisplay.css'
+import star_icon from "../assets/star_icon.png"
+import star_dull_icon from '../assets/star_dull_icon.png'
+import { ShopContext } from '../../context/ShopContext'
 import { ToastContainer } from 'react-toastify';
+import { productSizes } from './productDisplay.config'
+
+
 
 const ProductDisplay = (props) => {
     const { product } = props;
     const { addToCart } = useContext(ShopContext);
-    const [selectedSize, setSelectedSize] = useState(null);
 
-    const handleSizeClick = (size) => {
-        setSelectedSize(size);
-    };
+    const [selectedSize, setSelectedSize] = useState("")
+    const [showSizeError,setShowSizeError]=useState(false)
 
     return (
         <div className='productdisplay'>
@@ -30,6 +31,7 @@ const ProductDisplay = (props) => {
             <div className="productdisplay-right">
                 <h1>{product.name}</h1>
                 <div className="productdisplay-right-stars">
+                    
                     <img src={star_icon} alt="" />
                     <img src={star_icon} alt="" />
                     <img src={star_icon} alt="" />
@@ -45,27 +47,29 @@ const ProductDisplay = (props) => {
                     A lightweight , usually knitted , pullover shirt , close fitting , a round neckline and short sleeves,
                     worn as an undershirt or outershirt or garments. Will fit perfectly on you
                 </div>
-                <div className='productdisplay-right-size'>
+              <div className='sizes-container'>  <div className='productdisplay-right-size'>
                     <h1>Select Size</h1>
                     <div className='productdisplay-right-sizes'>
-                        {['XS', 'S', 'M', 'L', 'XL'].map(size => (
-                            <button
-                                key={size}
-                                className={selectedSize === size ? 'size-button selected' : 'size-button'}
-                                onClick={() => handleSizeClick(size)}
-                            >
-                                {size}
-                            </button>
-                        ))}
+                        {
+                            productSizes.map((size,index) =>
+                                <button key={index} className= {selectedSize===size? 'highlighted-size-button':'size-button'} onClick={()=>{
+                                    setSelectedSize(size);
+                                    setShowSizeError(false)}}>{size}</button>
+                            )
+                        }
                     </div>
                 </div>
-                <button className='addtocart' onClick={() => { addToCart(product.id) }}>ADD TO CART</button>
+                {
+                    showSizeError ? <span className='size-error'>Please select a size</span>: null
+                }
+                    </div> 
+                <button className='addtocart' onClick={() => { if(selectedSize){ addToCart(product.id,selectedSize)} else setShowSizeError(true)}}>ADD TO CART</button>
                 <p className='productdisplay-right-category'><span>Category : </span>Women/Men , T-Shirt , Crop-Top</p>
                 <p className='productdisplay-right-category'><span>Tags : </span>Modern , Latest</p>
             </div>
             <ToastContainer position='bottom-right' />
         </div>
-    );
+    )
 }
 
-export default ProductDisplay;
+export default ProductDisplay
