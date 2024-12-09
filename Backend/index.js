@@ -1,10 +1,12 @@
 const express = require("express");
 const app = express();
-const PORT = 4000;
+const PORT = 4001;
 const dotenv = require("dotenv");
 dotenv.config();
 const mongoose = require("mongoose");
 const cors = require("cors");
+const path=require ("path");
+const multer =require("multer");
 
 // Import routes
 const userRoutes = require("./User/routes/user");
@@ -16,8 +18,6 @@ app.use(cors());
 // Use routes
 app.use("/user", userRoutes);
 app.use("/product", productRoutes);
-
-
 
 mongoose.connect(process.env.MONGO_URL)
   .then(() => {

@@ -1,17 +1,45 @@
+// product.js
 const express = require("express");
 const router = express.Router();
 const Product = require("../models/product");
 
 
+const multer = require('multer');
+const path = require('path');
+
+//Image Storage Engine
+
+const storage = multer.diskStorage({
+  destination : './upload/images',
+  filename:(req,file,cb)=>{
+    return cb(null,`${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`)
+  }
+})
+
+const upload = multer({storage:storage})
+
+router.use('/images',express.static('upload/images'))
+
+//Creating upload endpoint for images
+router.post("/upload",upload.single('product'),(req,res)=>{
+  res.json({
+    success:1,
+    image_url:`http:localhost:4000/images/${req.file.filename}`
+  })
+})
+
 // Endpoint to add a new product
+
 router.post('/add', async (req, res) => {
   try {
     const { name, category, image_url, new_price, old_price } = req.body;
-    if (!name || !category || !image || !new_price || !old_price) {
+    if (!name || !category || !image_url || !new_price || !old_price) {
       return res.status(400).json({ errors: "Please provide all required fields" });
     }
-    const newProduct = await Product.create({ name, category, image_url, new_price, old_price })
+    const newProduct = await Product.create({ name, category, image_url, new_price, old_price });
+
     res.status(201).json({ success: true, message: "Product added successfully", product: newProduct });  
+
   } 
   catch (error) {
     console.error("Error adding product:", error);
@@ -32,8 +60,6 @@ router.get('/', async (req, res) => {
   }
 });
 
-
-
 // Endpoint to get a single product by ID 
 router.get('/:id', async (req, res) => {
   try {
@@ -48,7 +74,6 @@ router.get('/:id', async (req, res) => {
     res.status(500).json({ errors: "Internal Server Error" });
   }
 });
-
 
 // Endpoint to update a product by ID 
 router.put('/:id', async (req, res) => {
@@ -66,7 +91,6 @@ router.put('/:id', async (req, res) => {
     res.status(500).json({ errors: "Internal Server Error" });
   }
 });
-
 
 // Endpoint to update a single thing in product by ID (Patch)
 router.patch('/:id', async (req, res) => {
@@ -100,6 +124,5 @@ router.delete('/:id', async (req, res) => {
     res.status(500).json({ errors: "Internal Server Error" });
   }
 });
-
 
 module.exports = router;
