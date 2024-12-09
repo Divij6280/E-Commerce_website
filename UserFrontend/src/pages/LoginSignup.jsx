@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './CSS/LoginSignup.css';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { ShopContext } from "../context/ShopContext";
 
 const LoginSignup = () => {
     const [isSignup, setIsSignup] = useState(false);
@@ -11,6 +13,7 @@ const LoginSignup = () => {
         password: "",
         email: ""
     });
+    const { setFetchCart } = useContext(ShopContext);
 
     const navigate = useNavigate();
 
@@ -69,22 +72,7 @@ const LoginSignup = () => {
             if (responseData?.success) {
                 // Save auth token
                 localStorage.setItem('auth-token', responseData.token);
-
-                if (!isSignup) {
-                    // Fetch cart data after login
-                    await fetch('http://localhost:4000/user/getcart', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'auth-token': responseData.token,
-                        },
-                    })
-                        .then((response) => response.json())
-                        .then((cartData) => {
-                            localStorage.setItem('cartData', JSON.stringify(cartData));
-                        });
-                }
-
+                  setFetchCart(true)
                 setFormData({ username: "", password: "", email: "" });
                 navigate("/"); // Redirect to the home page after successful signup/login
                 toast.success(isSignup ? "Signup successful! Redirecting to home." : "Login successful! Redirecting to home.", {

@@ -1,18 +1,21 @@
-.cartitems{
-    margin : 100px 170px;
+
+.cartitems {
+    margin: 100px 170px;
 }
-.cartitems hr{
+
+.cartitems hr {
     height: 3px;
     background: #e2e2e2;
     border: 0;
 }
-.cartitems-format-main{
+
+.cartitems-format-main {
     display: grid;
-    grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr 1fr 1fr;
     align-items: center;
-    gap: 75px;
+    gap: 40px;
     padding: 20px 0px;
-    color : black;
+    color: black;
     font-size: 14px;
     font-weight: 600;
 }
@@ -21,45 +24,50 @@ body.dark-mode .cartitems-format-main {
     color: #e0e0e0;
 }
 
-.cartitems-format{
+
+.cartitems-format {
     font-size: 12px;
     font-weight: 500;
-    
 }
-.carticon-product-icon{
+
+.carticon-product-icon {
     height: 70px;
 }
-.cartitems-remove-icon{
+
+.cartitems-remove-icon {
     width: 15px;
     margin: 0px 40px;
     cursor: pointer;
 }
-.cartitems-quantity{
-    width: 64px;
-    height: 50px;
-    border: 2px solid #ebebeb;
-    background: white;
+
+.cart-items-size {
+    color: rgb(169, 85, 247);
 }
-.cartitems-down{
+
+.cartitems-down {
     display: flex;
     margin: 100px 0px;
 }
-.cartitems-total{
+
+.cartitems-total {
     flex: 1;
     display: flex;
     flex-direction: column;
     margin-right: 200px;
     gap: 40px;
 }
-.cartitems-total h1{
+
+.cartitems-total h1 {
     display: flex;
 }
-.cartitems-total-item{
+
+.cartitems-total-item {
     display: flex;
     justify-content: space-between;
     padding: 15px 0px;
 }
-.cartitems-total button{
+
+.cartitems-total button {
     width: 200px;
     height: 45px;
     outline: none;
@@ -70,16 +78,17 @@ body.dark-mode .cartitems-format-main {
     font-weight: 600;
     cursor: pointer;
 }
-.cartitems-promocode{
+.cartitems-promocode {
     flex: 1;
     font-size: 15px;
     font-weight: 500;
 }
-.cartitems-promocode p{
+
+.cartitems-promocode p {
     margin-left: 80px;
-    /* color: #555; */
 }
-.cartitems-promobox{
+
+.cartitems-promobox {
     border: 1px solid white;
     width: 282px;
     margin-top: 15px;
@@ -88,7 +97,8 @@ body.dark-mode .cartitems-format-main {
     height: 41.5px;
     background: #f7f5f5;
 }
-.cartitems-promobox input{
+
+.cartitems-promobox input {
     border: none;
     outline: none;
     background: transparent;
@@ -96,9 +106,9 @@ body.dark-mode .cartitems-format-main {
     font-weight: 500;
     width: 150px;
     height: 20px;
-    
 }
-.cartitems-promobox button{
+
+.cartitems-promobox button {
     border: none;
     width: 100px;
     height: 40px;
@@ -107,7 +117,71 @@ body.dark-mode .cartitems-format-main {
     color: white;
     cursor: pointer;
 }
-.cartitems-promobox button:hover{
+
+.cartitems-promobox button:hover {
     color: #ada6a6;
 }
 
+.loader-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 20vh;
+}
+
+.loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bounce {
+    width: 15px;
+    height: 15px;
+    margin: 0 5px;
+    background-color: #3498db;
+    border-radius: 50%;
+    animation: bounce 0.6s infinite alternate;
+}
+
+.empty-cart-message {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #555;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    margin: auto;
+    margin-top: 50px;
+}
+
+
+.empty-cart-message button {
+background-color: #4CAF50; /* Green background */
+color: white; /* White text */
+padding: 10px 20px; /* Padding */
+text-align: center;
+text-decoration: none;
+display: inline-block;
+font-size: 16px;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+transition: background-color 0.3s ease;
+margin-top: 15px;
+}
+
+.empty-cart-message button:hover {
+background-color: #45a049; /* Darker green when hovered */
+}
+
+.empty-cart-message button:active {
+background-color: #3e8e41; /* Even darker green on click */
+}
+
+body.dark-mode .empty-cart-message{
+    box-shadow: 2px 4px 8px rgb(167, 164, 164);
+}
