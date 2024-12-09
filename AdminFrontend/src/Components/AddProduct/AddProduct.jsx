@@ -23,15 +23,23 @@ const AddProduct = () => {
   const addProductHandler = async () => {
     // You can add your fetch request here for adding the product
     console.log(productDetails);
+    let responseData;
     let formData = new FormData();
     formData.append('product', image);
 
+    await fetch('http://localhost:4001/product/upload', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+      },
+      body: formData,
+    })
+    .then((resp) => resp.json())
+    .then((data) => { responseData = data });
 
-    //  fetch request:
-    // await fetch('http://localhost:4000/product/add', {
-    //   method: 'POST',
-    //   body: formData,
-    // });
+    if (responseData.success) {
+      productDetails.image = responseData.image_url;
+    }
   }
 
   return (
