@@ -3,6 +3,7 @@ import './popular.css'
 import data_product from "../assets/data";
 import Item from "../items/item";
 
+
 const Popular = () => {
     return (
         <div className="popular">

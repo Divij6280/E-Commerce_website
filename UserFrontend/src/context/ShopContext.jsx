@@ -19,15 +19,6 @@ export const ShopContext = createContext({
 });
 
 
-// Helper function to initialize the cart with default values
-// const getDefaultCart = () => {
-//   let cart = {};
-//   for (let index = 0; index < all_product.length; index++) {
-//     cart[all_product[index].id] = 0;
-//   }
-//   return cart;
-// };
-
 const ShopContextProvider = (props) => {
   const [cartItems, setCartItems] = useState([]);
   const [loadingCart, setLoadingCart] = useState(false)
@@ -211,6 +202,7 @@ const ShopContextProvider = (props) => {
   };
 
   return <ShopContext.Provider value={contextValue}>{props.children}</ShopContext.Provider>;
+
 };
 
 export default ShopContextProvider;

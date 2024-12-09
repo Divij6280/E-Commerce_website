@@ -1,3 +1,4 @@
+
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom'; // Use useNavigate
@@ -6,6 +7,7 @@ import { ShopContext } from "../../context/ShopContext";
 import remove_icon from "../assets/cart_cross_icon.png";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
+
 import Loader from "../Loading/Loader";
 
 const CartItems = () => {

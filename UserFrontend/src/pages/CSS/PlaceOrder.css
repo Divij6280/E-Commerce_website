@@ -1,3 +1,4 @@
+
 .placeorder-container {
   max-width: 800px;
   margin: 50px auto;
@@ -6,6 +7,7 @@
   border-radius: 12px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
   font-family: 'Arial', sans-serif;
+
 }
 
 .placeorder-container h2 {
@@ -13,6 +15,7 @@
   font-size: 24px;
   color: #333;
   margin-bottom: 10px;
+
 }
 
 .placeorder-container p {
@@ -20,10 +23,12 @@
   font-size: 14px;
   color: #666;
   margin-bottom: 30px;
+
 }
 
 .payment-options {
   display: flex;
+
   justify-content: space-around;
   margin-bottom: 30px;
 }
@@ -132,6 +137,7 @@
 .submit-button:hover {
   background-color: #0056b3;
 }
+
 
 body.dark-mode .placeorder-container h2{
   color: #333;

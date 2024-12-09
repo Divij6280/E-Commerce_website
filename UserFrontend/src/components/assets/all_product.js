@@ -38,6 +38,7 @@ import p36_img from "./product_36.png";
 let all_product = [
   {
     id: 1,
+
     name: "Black Puffer jacket for Women",
     category: "women",
     image: p1_img,
@@ -47,6 +48,7 @@ let all_product = [
   {
     id: 2,
     name: "Pink Top for Women",
+
     category: "women",
     image: p2_img,
     new_price: 8500,
@@ -62,6 +64,7 @@ let all_product = [
   },
   {
     id: 4,
+
     name: "Red Top  for Women",
     category: "women",
     image: p4_img,
@@ -94,6 +97,7 @@ let all_product = [
   },
   {
     id: 8,
+
     name: "Top",
     category: "women",
     image: p8_img,

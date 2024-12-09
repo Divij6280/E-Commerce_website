@@ -1,3 +1,4 @@
+
 import React, { useContext, useState } from 'react'
 import './ProductDisplay.css'
 import star_icon from "../assets/star_icon.png"
@@ -70,6 +71,7 @@ const ProductDisplay = (props) => {
             <ToastContainer position='bottom-right' />
         </div>
     )
+
 }
 
 export default ProductDisplay

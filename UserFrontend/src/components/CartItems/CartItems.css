@@ -1,3 +1,4 @@
+
 .cartitems {
     margin: 100px 170px;
 }
@@ -22,6 +23,7 @@
 body.dark-mode .cartitems-format-main {
     color: #e0e0e0;
 }
+
 
 .cartitems-format {
     font-size: 12px;
@@ -76,7 +78,6 @@ body.dark-mode .cartitems-format-main {
     font-weight: 600;
     cursor: pointer;
 }
-
 .cartitems-promocode {
     flex: 1;
     font-size: 15px;
