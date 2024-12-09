@@ -2,6 +2,8 @@ import './Sidebar.css';
 import { useNavigate } from 'react-router-dom';
 import add_product_icon from '../../assets/Product_Cart.svg';
 import list_product_icon from '../../assets/Product_list_icon.svg';
+import edit_product_icon from '../../assets/edit.jpg';
+import delete_product_icon from '../../assets/delete.jpg'
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -17,11 +19,11 @@ const Sidebar = () => {
         <p>Add Product</p>
       </div>
       <div className='sidebar-item' onClick={() => navigate('/editproduct')} style={{ textDecoration: 'none' }}>
-        <img src={add_product_icon} alt='Edit Product Icon' />
+        <img className="Product-logo" src={edit_product_icon} alt='Edit Product Icon' />
         <p>Edit Product</p>
       </div>
       <div className='sidebar-item' onClick={() => navigate('/deleteproduct')} style={{ textDecoration: 'none' }}>
-        <img src={add_product_icon} alt='Delete Product Icon' />
+        <img className="Product-logo" src={delete_product_icon} alt='Delete Product Icon' />
         <p>Delete Product</p>
       </div>
     </div>

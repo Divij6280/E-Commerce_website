@@ -1,3 +1,4 @@
+// product.js
 const express = require("express");
 const router = express.Router();
 const Product = require("../models/product");
@@ -39,6 +40,8 @@ router.post('/addproduct', async (req, res) => {
     const newProduct = await Product.create({ id, name, category, image, new_price, old_price });
     res.status(201).json({ success: true, message: "Product added successfully", product: newProduct });  
   } catch (error) {
+
+    
     console.error("Error adding product:", error);
     res.status(500).json({ errors: "Internal Server Error" });
   }
@@ -72,8 +75,8 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-
 // Endpoint to update product by ID (Patch)
+
 router.patch('/:id', async (req, res) => {
   try {
     const updatedProduct = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
@@ -105,6 +108,5 @@ router.delete('/:id', async (req, res) => {
     res.status(500).json({ errors: "Internal Server Error" });
   }
 });
-
 
 module.exports = router;
