@@ -4,6 +4,7 @@ const Users = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+
 // Endpoint for user registration
 router.post('/signup', async (req, res) => {
     const { username, email, password } = req.body;
