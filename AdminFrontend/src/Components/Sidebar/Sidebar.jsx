@@ -2,8 +2,8 @@ import './Sidebar.css';
 import { useNavigate } from 'react-router-dom';
 import add_product_icon from '../../assets/Product_Cart.svg';
 import list_product_icon from '../../assets/Product_list_icon.svg';
-import edit_product_icon from '../../assets/edit.png';
-import delete_product_icon from '../../assets/delete.png'
+import edit_product_icon from '../../assets/edit.jpg';
+import delete_product_icon from '../../assets/delete.jpg'
 
 const Sidebar = () => {
   const navigate = useNavigate();

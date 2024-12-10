@@ -14,6 +14,7 @@ const productRoutes = require("./Admin/routes/product");
 
 app.use(express.json());
 app.use(cors());
+app.use(express.urlencoded({ extended: true }));
 
 // Use routes
 app.use("/user", userRoutes);

@@ -8,7 +8,6 @@ import 'react-toastify/dist/ReactToastify.css';
 const AddProduct = () => {
   const [image, setImage] = useState(false);
   const [productDetails, setProductDetails] = useState({
-    id:"",
     name: "",
     image: "",
     category: "women",
@@ -22,13 +21,14 @@ const AddProduct = () => {
 
   const changeHandler = (e) => {
     setProductDetails({ ...productDetails, [e.target.name]: e.target.value });
+
+
   };
 
   const Add_Product = async () => {
     let responseData;
     let formData = new FormData();
     formData.append('product', image);
-
     await fetch('http://localhost:4000/product/upload', {
       method: 'POST',
       headers: {
@@ -38,16 +38,29 @@ const AddProduct = () => {
     }).then((resp) => resp.json())
       .then((data) => { responseData = data });
 
+   
+
     if (responseData.success) {
+      let val=responseData.image
+      
       setProductDetails((prevDetails) => ({
         ...prevDetails,
-        image: responseData.image
+        image: val
       }));
-      console.log({
-        ...productDetails,
-        image: responseData.image
-      });
+      // console.log(productDetails,val);
 
+      await fetch('http://localhost:4000/product/addproduct', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+        },
+        body: productDetails,
+      }).then((resp) => resp.json())
+        .then((data) => { responseData = data });
+  
+
+
+  
       // Show success toast
       toast.success("Product added successfully!",{
         autoClose:500
