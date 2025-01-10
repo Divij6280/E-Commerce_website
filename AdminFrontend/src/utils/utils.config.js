@@ -1,17 +1,17 @@
-
 export const getApiBaseUrl = () => {
-  return process.env.NODE_ENV === 'production'
-    ? process.env.REACT_APP_API_BASE_URL_PROD
-    : process.env.REACT_APP_API_BASE_URL;
-}
+  return import.meta.env.MODE === 'production'
+    ? import.meta.env.VITE_API_BASE_URL_PROD
+    : import.meta.env.VITE_API_BASE_URL;
+};
 
-console.log("MODE", process.env.NODE_ENV)
+console.log("MODE", import.meta.env.MODE);
 const BASE_URL = getApiBaseUrl();
 
-console.log("base url",BASE_URL)
+console.log("Base URL", BASE_URL);
+
 export const apiRequest = async (endpoint, method = 'GET', body = null, headers = {}) => {
   const url = `${BASE_URL}${endpoint}`;
-  
+
   const defaultHeaders = {
     Accept: 'application/json',
     ...headers,
@@ -23,13 +23,14 @@ export const apiRequest = async (endpoint, method = 'GET', body = null, headers 
   };
 
   if (body) {
-    options.body = body;
+    options.body = JSON.stringify(body); // Ensure the body is stringified
+    options.headers['Content-Type'] = 'application/json'; // Set content type for JSON requests
   }
 
   try {
     const response = await fetch(url, options);
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(`HTTP error! Status: ${response.status}`);
     }
     return await response.json();
   } catch (error) {
