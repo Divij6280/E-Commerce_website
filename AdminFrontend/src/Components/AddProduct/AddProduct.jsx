@@ -27,7 +27,7 @@ const AddProduct = () => {
 
   };
 
-  const Add_Product = async (image, productDetails, setProductDetails) => {
+  const Add_Product = async (image) => {
     try {
       // Create FormData for the image upload
       const formData = new FormData();

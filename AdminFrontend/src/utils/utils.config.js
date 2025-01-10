@@ -4,13 +4,12 @@ export const getApiBaseUrl = () => {
     : import.meta.env.VITE_API_BASE_URL;
 };
 
-console.log("MODE", import.meta.env.MODE);
 const BASE_URL = getApiBaseUrl();
 
-console.log("Base URL", BASE_URL);
 
 export const apiRequest = async (endpoint, method = 'GET', body = null, headers = {}) => {
   const url = `${BASE_URL}${endpoint}`;
+  console.log("url",url,"base",BASE_URL,"END",endpoint)
 
   const defaultHeaders = {
     Accept: 'application/json',
