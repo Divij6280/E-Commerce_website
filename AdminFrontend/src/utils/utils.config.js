@@ -5,7 +5,9 @@ export const getApiBaseUrl = () => {
     : process.env.REACT_APP_API_BASE_URL;
 }
 
+console.log("MODE", process.env.NODE_ENV)
 const BASE_URL = getApiBaseUrl();
+
 console.log("base url",BASE_URL)
 export const apiRequest = async (endpoint, method = 'GET', body = null, headers = {}) => {
   const url = `${BASE_URL}${endpoint}`;
