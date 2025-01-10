@@ -5,6 +5,7 @@ import './CSS/LoginSignup.css';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ShopContext } from "../context/ShopContext";
+import { apiRequest } from "../utils/utils.config";
 
 const LoginSignup = () => {
     const [isSignup, setIsSignup] = useState(false);
@@ -50,46 +51,35 @@ const LoginSignup = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!validateForm()) return;
-
-        const url = `http://localhost:4000/user/${isSignup ? 'signup' : 'login'}`;
+      
+        const endpoint = `/user/${isSignup ? 'signup' : 'login'}`;
         const requestBody = JSON.stringify(formData);
-        const headers = {
+      
+        try {
+          const responseData = await apiRequest(endpoint, 'POST', requestBody, {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-        };
-
-        let responseData;
-
-        try {
-            await fetch(url, {
-                method: 'POST',
-                headers,
-                body: requestBody,
-            })
-                .then((response) => response.json())
-                .then((data) => (responseData = data));
-
-            if (responseData?.success) {
-                // Save auth token
-                localStorage.setItem('auth-token', responseData.token);
-                  setFetchCart(true)
-                setFormData({ username: "", password: "", email: "" });
-                navigate("/"); // Redirect to the home page after successful signup/login
-                toast.success(isSignup ? "Signup successful! Redirecting to home." : "Login successful! Redirecting to home.", {
-                    autoClose: 500
-                });
-            } else {
-                toast.error(responseData.errors || "An error occurred", {
-                    autoClose: 500
-                });
-            }
+          });
+      
+          if (responseData?.success) {
+            // Save auth token
+            localStorage.setItem('auth-token', responseData.token);
+            setFetchCart(true);
+            setFormData({ username: "", password: "", email: "" });
+            navigate("/"); // Redirect to the home page after successful signup/login
+      
+            toast.success(
+              isSignup ? "Signup successful! Redirecting to home." : "Login successful! Redirecting to home.",
+              { autoClose: 500 }
+            );
+          } else {
+            toast.error(responseData.errors || "An error occurred", { autoClose: 500 });
+          }
         } catch (error) {
-            console.error("Network error:", error);
-            toast.error("Network error. Please try again later.", {
-                autoClose: 500
-            });
+          console.error("Network error:", error);
+          toast.error("Network error. Please try again later.", { autoClose: 500 });
         }
-    };
+      };
 
     return (
         <div className="bodylogin">

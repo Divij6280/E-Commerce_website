@@ -2,6 +2,7 @@ import React, { createContext, useEffect, useState } from "react";
 import all_product from "../components/assets/all_product";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { apiRequest } from "../utils/utils.config";
 
 // Default values for the context
 export const ShopContext = createContext({
@@ -32,34 +33,27 @@ const ShopContextProvider = (props) => {
 
   // Fetch cart data on component mount if the user is authenticated
   useEffect(() => {
-    const token = localStorage.getItem("auth-token");
-    if (token) {
-      setLoadingCart(true);
-      fetch("http://localhost:4000/user/getcart", {
-        method: "POST",
-        headers: {
-          Accept: "application/json", // Ensure this matches the expected type
-          "auth-token": token,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({}), // Explicitly send an empty JSON object
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          return response.json(); // Parse only if the response is valid
-        })
-        .then((data) => {
+    const fetchCartData = async () => {
+      const token = localStorage.getItem("auth-token");
+      if (token) {
+        setLoadingCart(true);
+        try {
+          const data = await apiRequest('/user/getcart', 'POST', JSON.stringify({}), {
+            'auth-token': token,
+            'Content-Type': 'application/json',
+          });
           setCartItems(data);
-        })
-        .catch((error) => {
-          console.error("Error fetching cart data:", error);
-        })
-        .finally(() => {
+        } catch (error) {
+          console.error('Error fetching cart data:', error);
+        } finally {
           setLoadingCart(false);
-          setFetchCart(false)
-        });
+          setFetchCart(false);
+        }
+      }
+    };
+
+    if (fetchCart) {
+      fetchCartData();
     }
   }, [fetchCart]);
 
@@ -71,7 +65,7 @@ const ShopContextProvider = (props) => {
 
 
   // Add item to the cart
-  const addToCart = (itemId, selectedSize) => {
+  const addToCart = async (itemId, selectedSize) => {
     const token = localStorage.getItem("auth-token");
     if (!token) {
       toast.error("Sign in to add products to the cart.", {
@@ -80,38 +74,30 @@ const ShopContextProvider = (props) => {
       });
       return;
     }
-
-
-    fetch("http://localhost:4000/user/addtocart", {
-      method: "POST",
-      headers: {
-        "auth-token": token,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ itemId, selectedSize }),
-    })
-      .then((response) => {
-        if (!response.ok) throw new Error("Failed to add to cart");
-        return response.json();
-      })
-      .then((data) => { setFetchCart(true) })
-      .catch((error) => {
-        console.error("Error adding to cart:", error);
-        toast.error("Failed to add item to cart. Try again.", {
-          autoClose: 500,
-          pauseOnHover: false,
-        });
+  
+    try {
+      await apiRequest('/user/addtocart', 'POST', JSON.stringify({ itemId, selectedSize }), {
+        'auth-token': token,
+        'Content-Type': 'application/json',
       });
-
-    toast.success("Item added to cart successfully!", {
-      autoClose: 500,
-      pauseOnHover: false,
-    });
+  
+      toast.success("Item added to cart successfully!", {
+        autoClose: 500,
+        pauseOnHover: false,
+      });
+  
+      setFetchCart(true);
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      toast.error("Failed to add item to cart. Try again.", {
+        autoClose: 500,
+        pauseOnHover: false,
+      });
+    }
   };
 
-
   // Remove item from the cart
-  const removeFromCart = (itemId, size) => {
+  const removeFromCart = async (itemId, size) => {
     const token = localStorage.getItem("auth-token");
     if (!token) {
       toast.error("Sign in to remove products from the cart.", {
@@ -120,35 +106,33 @@ const ShopContextProvider = (props) => {
       });
       return;
     }
-
-    setRemovingItem((prev) => ({ ...prev, [itemId]: true , [size]:size}))
-
-    fetch("http://localhost:4000/user/removefromcart", {
-      method: "POST",
-      headers: {
-        "auth-token": token,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ itemId, size }),
-    })
-      .then((response) => {
-        if (!response.ok) throw new Error("Failed to remove from cart");
-        return response.json();
-      })
-      .then((data) => setFetchCart(true))
-      .catch((error) => {
-        console.error("Error removing from cart:", error);
-        toast.error("Failed to remove item from cart. Try again.", {
-          autoClose: 500,
-          pauseOnHover: false,
-        });
-      }).finally(() =>
-        setRemovingItem((prev) => ({ ...prev, [itemId]: false ,[size]:false})))
-
-    toast.success("Item removed from cart successfully!", {
-      autoClose: 500,
-      pauseOnHover: false,
-    });
+  
+    // Set the removing state for UI feedback
+    setRemovingItem((prev) => ({ ...prev, [itemId]: true, [size]: true }));
+  
+    try {
+      await apiRequest('/user/removefromcart', 'POST', JSON.stringify({ itemId, size }), {
+        'auth-token': token,
+        'Content-Type': 'application/json',
+      });
+  
+      toast.success("Item removed from cart successfully!", {
+        autoClose: 500,
+        pauseOnHover: false,
+      });
+  
+      // Trigger fetchCart to update cart items
+      setFetchCart(true);
+    } catch (error) {
+      console.error("Error removing from cart:", error);
+      toast.error("Failed to remove item from cart. Try again.", {
+        autoClose: 500,
+        pauseOnHover: false,
+      });
+    } finally {
+      // Reset the removing state
+      setRemovingItem((prev) => ({ ...prev, [itemId]: false, [size]: false }));
+    }
   };
 
   // Calculate total amount of items in the cart

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './ListProduct.css';
 import cross_icon from '../../assets/cross_icon.png'
 import { useEffect } from 'react';
+import { apiRequest } from '../../utils/utils.config';
 
 const ListProduct = () => {
   const [allproducts, setAllProducts] = useState([]);
@@ -14,11 +15,15 @@ const ListProduct = () => {
     // let formData = new FormData();
     // formData.append('product', image);
 
-    const fetchInfo  = async () => {
-    await fetch('http://localhost:4001/product/upload')
-    .then((res)=>res.json())
-    .then((data)=>{setAllProducts(data)}); 
-    }
+    const fetchInfo = async () => {
+      try {
+        const data = await apiRequest('/product/upload', 'GET');
+        setAllProducts(data);
+      } catch (error) {
+        console.error("Error fetching product info:", error);
+      }
+    };
+
     useEffect(()=>{
       fetchInfo()
     },[])

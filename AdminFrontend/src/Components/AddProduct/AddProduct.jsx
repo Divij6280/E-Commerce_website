@@ -4,6 +4,8 @@ import upload_area from '../../assets/upload_area.svg';
 import { useState } from 'react';
 import { toast , ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { apiRequest } from '../../utils/utils.config';
+
 
 const AddProduct = () => {
   const [image, setImage] = useState(false);
@@ -25,52 +27,49 @@ const AddProduct = () => {
 
   };
 
-  const Add_Product = async () => {
-    let responseData;
-    let formData = new FormData();
-    formData.append('product', image);
-    await fetch('http://localhost:4000/product/upload', {
-      method: 'POST',
-      headers: {
+  const Add_Product = async (image, productDetails, setProductDetails) => {
+    try {
+      // Create FormData for the image upload
+      const formData = new FormData();
+      formData.append('product', image);
+  
+      // Upload the image
+      const uploadResponse = await apiRequest('/product/upload', 'POST', formData, {
         Accept: 'application/json',
-      },
-      body: formData,
-    }).then((resp) => resp.json())
-      .then((data) => { responseData = data });
-
-   
-
-    if (responseData.success) {
-      let val=responseData.image
-      
-      setProductDetails((prevDetails) => ({
-        ...prevDetails,
-        image: val
-      }));
-      // console.log(productDetails,val);
-
-      await fetch('http://localhost:4000/product/addproduct', {
-        method: 'POST',
-        headers: {
+      });
+  
+      if (uploadResponse.success) {
+        const uploadedImage = uploadResponse.image;
+  
+        // Update product details with the uploaded image
+        const updatedDetails = {
+          ...productDetails,
+          image: uploadedImage,
+        };
+        setProductDetails(updatedDetails);
+  
+        // Add the product
+        const addProductResponse = await apiRequest('/product/addproduct', 'POST', JSON.stringify(updatedDetails), {
           Accept: 'application/json',
-        },
-        body: productDetails,
-      }).then((resp) => resp.json())
-        .then((data) => { responseData = data });
+          'Content-Type': 'application/json',
+        });
   
-
-
-  
-      // Show success toast
-      toast.success("Product added successfully!",{
-        autoClose:500
-      })
-    } else {
-      // Show error toast if upload fails
-      toast.error("Failed to add product. Please try again.");
+        if (addProductResponse.success) {
+          // Show success toast
+          toast.success("Product added successfully!", { autoClose: 500 });
+        } else {
+          // Show error toast if adding the product fails
+          toast.error("Failed to add product. Please try again.");
+        }
+      } else {
+        // Show error toast if image upload fails
+        toast.error("Failed to upload image. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error adding product:", error);
+      toast.error("An error occurred. Please try again later.");
     }
   };
-
   return (
     <div className='add-product'>
       <div className='addproduct-itemfield'>
