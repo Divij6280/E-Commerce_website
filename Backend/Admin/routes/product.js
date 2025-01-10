@@ -1,11 +1,9 @@
-// product.js
+
 const express = require("express");
 const router = express.Router();
 const Product = require("../models/product");
 const multer = require('multer');
 const path = require('path');
-
-
 
 //Image Storage Engine
 
@@ -24,32 +22,32 @@ router.use('/images',express.static('upload/images'))
 router.post("/upload",upload.single('product'),(req,res)=>{
   res.json({
     success:1,
-    image:`http://localhost:4000/images/${req.file.filename}`
+    image:`http:localhost:4000/images/${req.file.filename}`
   })
-}) 
+})
 
 // Endpoint to add a new product
+
+// Backend to handle product addition
 router.post('/addproduct', async (req, res) => {
-  try { 
-    let products =await Product.find({});
+  try {
     const { id, name, category, image, new_price, old_price } = req.body;
     if (!id || !name || !category || !image || !new_price || !old_price) {
-      return res.status(400).json({ errors: "Please provide all required fields" });
+      return res.status(400).json({ success: false, message: "Please provide all required fields" });
     }
 
     const newProduct = await Product.create({ id, name, category, image, new_price, old_price });
-    res.status(201).json({ success: true, message: "Product added successfully", product: newProduct });  
+    res.status(201).json({ success: true, message: "Product added successfully", product: newProduct });
   } catch (error) {
-
-    
     console.error("Error adding product:", error);
-    res.status(500).json({ errors: "Internal Server Error" });
+    res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 });
 
 
+
 // Endpoint to get all products 
-router.get('/', async (req, res) => {
+router.get('/allproducts', async (req, res) => {
   try {
     const products = await Product.find();
     res.status(200).json(products);
@@ -75,8 +73,24 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// Endpoint to update product by ID (Patch)
+// Endpoint to update a product by ID 
+router.put('/:id', async (req, res) => {
+  try {
+    const { name, category, image, new_price, old_price } = req.body;
+    const updatedProduct = await Product.findByIdAndUpdate(req.params.id, { name, category, image, new_price, old_price }, { new: true, runValidators: true });
+    
+    if (!updatedProduct) {
+      return res.status(404).json({ errors: "Product not found" });
+    }
+    res.status(200).json({ success: true, message: "Product updated successfully", product: updatedProduct });
+  } 
+  catch (error) {
+    console.error("Error updating product:", error);
+    res.status(500).json({ errors: "Internal Server Error" });
+  }
+});
 
+// Endpoint to update a single thing in product by ID (Patch)
 router.patch('/:id', async (req, res) => {
   try {
     const updatedProduct = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
@@ -109,4 +123,14 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
+// Creating upload endpoint for images
+router.post("/upload", upload.single('product'), (req, res) => {
+  res.json({
+    success: 1,
+    image: `http://localhost:4000/images/${req.file.filename}`  // Corrected image URL format
+  });
+});
+
+
 module.exports = router;
+
