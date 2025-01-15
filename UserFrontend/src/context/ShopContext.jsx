@@ -2,7 +2,6 @@ import React, { createContext, useEffect, useState } from "react";
 import all_product from "../components/assets/all_product";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { apiRequest } from "../utils/utils.config";
 
 // Default values for the context
 export const ShopContext = createContext({
@@ -38,10 +37,20 @@ const ShopContextProvider = (props) => {
       if (token) {
         setLoadingCart(true);
         try {
-          const data = await apiRequest('/user/getcart', 'POST', JSON.stringify({}), {
-            'auth-token': token,
-            'Content-Type': 'application/json',
+          const response = await fetch(`${process.env.REACT_APP_API_BASE_URL_PROD}/user/getcart`, {
+            method: 'POST',
+            headers: {
+              'auth-token': token,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({}),
           });
+  
+          if (!response.ok) {
+            throw new Error(`Error: ${response.status} - ${response.statusText}`);
+          }
+  
+          const data = await response.json();
           setCartItems(data);
         } catch (error) {
           console.error('Error fetching cart data:', error);
@@ -51,11 +60,12 @@ const ShopContextProvider = (props) => {
         }
       }
     };
-
+  
     if (fetchCart) {
       fetchCartData();
     }
   }, [fetchCart]);
+  
 
   // Clear the cart
   const clearCart = () => {
@@ -76,17 +86,25 @@ const ShopContextProvider = (props) => {
     }
   
     try {
-      await apiRequest('/user/addtocart', 'POST', JSON.stringify({ itemId, selectedSize }), {
-        'auth-token': token,
-        'Content-Type': 'application/json',
+      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL_PROD}/user/addtocart`, {
+        method: 'POST',
+        headers: {
+          'auth-token': token,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ itemId, selectedSize }),
       });
+  
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status} - ${response.statusText}`);
+      }
   
       toast.success("Item added to cart successfully!", {
         autoClose: 500,
         pauseOnHover: false,
       });
   
-      setFetchCart(true);
+      setFetchCart(true); // Trigger cart update
     } catch (error) {
       console.error("Error adding to cart:", error);
       toast.error("Failed to add item to cart. Try again.", {
@@ -95,6 +113,7 @@ const ShopContextProvider = (props) => {
       });
     }
   };
+  
 
   // Remove item from the cart
   const removeFromCart = async (itemId, size) => {
@@ -111,10 +130,18 @@ const ShopContextProvider = (props) => {
     setRemovingItem((prev) => ({ ...prev, [itemId]: true, [size]: true }));
   
     try {
-      await apiRequest('/user/removefromcart', 'POST', JSON.stringify({ itemId, size }), {
-        'auth-token': token,
-        'Content-Type': 'application/json',
+      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL_PROD}/user/removefromcart`, {
+        method: 'POST',
+        headers: {
+          'auth-token': token,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ itemId, size }),
       });
+  
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status} - ${response.statusText}`);
+      }
   
       toast.success("Item removed from cart successfully!", {
         autoClose: 500,
@@ -134,6 +161,7 @@ const ShopContextProvider = (props) => {
       setRemovingItem((prev) => ({ ...prev, [itemId]: false, [size]: false }));
     }
   };
+  
 
   // Calculate total amount of items in the cart
   const getTotalCartAmount = () => {

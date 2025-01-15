@@ -5,7 +5,6 @@ import './CSS/LoginSignup.css';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ShopContext } from "../context/ShopContext";
-import { apiRequest } from "../utils/utils.config";
 
 const LoginSignup = () => {
     const [isSignup, setIsSignup] = useState(false);
@@ -56,10 +55,21 @@ const LoginSignup = () => {
         const requestBody = JSON.stringify(formData);
       
         try {
-          const responseData = await apiRequest(endpoint, 'POST', requestBody, {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
+          const response = await fetch(`${process.env.REACT_APP_API_BASE_URL_PROD}${endpoint}`, {
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: requestBody,
           });
+      
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.errors || "An error occurred");
+          }
+      
+          const responseData = await response.json();
       
           if (responseData?.success) {
             // Save auth token
@@ -80,6 +90,7 @@ const LoginSignup = () => {
           toast.error("Network error. Please try again later.", { autoClose: 500 });
         }
       };
+      
 
     return (
         <div className="bodylogin">
