@@ -11,6 +11,7 @@ const BASE_URL = getApiBaseUrl();
 export const apiRequest = async (endpoint, method = 'GET', body = null, headers = {}) => {
   const url = `${BASE_URL}${endpoint}`;
   console.log("url", url, "base", BASE_URL, "END", endpoint);
+  console.log("MODE", process.env.MODE)
 
   const defaultHeaders = {
     Accept: 'application/json',
