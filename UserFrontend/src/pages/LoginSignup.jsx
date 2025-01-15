@@ -55,7 +55,7 @@ const LoginSignup = () => {
         const requestBody = JSON.stringify(formData);
       
         try {
-          const response = await fetch(`${process.env.REACT_APP_API_BASE_URL_PROD}${endpoint}`, {
+          const response = await fetch(`https://e-commerce-website-server-azure.vercel.app${endpoint}`, {
             method: 'POST',
             headers: {
               Accept: 'application/json',
