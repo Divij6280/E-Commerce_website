@@ -1,17 +1,9 @@
 import axios from 'axios';
 
-export const getApiBaseUrl = () => {
-  return process.env.MODE === 'production'
-    ? process.env.REACT_APP_API_BASE_URL_PROD
-    : process.env.REACT_APP_API_BASE_URL;
-};
 
-const BASE_URL = getApiBaseUrl();
 
 export const apiRequest = async (endpoint, method = 'GET', body = null, headers = {}) => {
-  const url = `${BASE_URL}${endpoint}`;
-  console.log("url", url, "base", BASE_URL, "END", endpoint);
-  console.log("MODE", process.env.MODE)
+  const url = `${process.env.REACT_APP_API_BASE_URL_PROD}${endpoint}`;
 
   const defaultHeaders = {
     Accept: 'application/json',
