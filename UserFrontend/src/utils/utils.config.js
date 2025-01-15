@@ -3,7 +3,7 @@ import axios from 'axios';
 
 
 export const apiRequest = async (endpoint, method = 'GET', body = null, headers = {}) => {
-  const url = `${process.env.REACT_APP_API_BASE_URL_PROD}${endpoint}`;
+  const url = `${endpoint}`;
 
   const defaultHeaders = {
     Accept: 'application/json',
