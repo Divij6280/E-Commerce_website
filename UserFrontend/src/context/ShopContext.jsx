@@ -38,7 +38,7 @@ const ShopContextProvider = (props) => {
         setLoadingCart(true);
         try {
 
-          const response = await fetch(`https://e-commerce-website-server-azure.vercel.app/user/getcart`, {
+          const response = await fetch(`https://e-commerce-website-1-unv3.onrender.com/user/getcart`, {
             method: 'POST',
             headers: {
               'auth-token': token,
@@ -87,7 +87,7 @@ const ShopContextProvider = (props) => {
     }
   
     try {
-      const response = await fetch(`https://e-commerce-website-server-azure.vercel.app/user/addtocart`, {
+      const response = await fetch(`https://e-commerce-website-1-unv3.onrender.com/user/addtocart`, {
         method: 'POST',
         headers: {
           'auth-token': token,
@@ -131,7 +131,7 @@ const ShopContextProvider = (props) => {
     setRemovingItem((prev) => ({ ...prev, [itemId]: true, [size]: true }));
   
     try {
-      const response = await fetch(`https://e-commerce-website-server-azure.vercel.app/user/removefromcart`, {
+      const response = await fetch(`https://e-commerce-website-1-unv3.onrender.com/user/removefromcart`, {
         method: 'POST',
         headers: {
           'auth-token': token,
