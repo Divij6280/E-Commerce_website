@@ -4,7 +4,6 @@ import upload_area from '../../assets/upload_area.svg';
 import { useState } from 'react';
 import { toast , ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { apiRequest } from '../../utils/utils.config';
 
 
 const AddProduct = () => {
@@ -34,12 +33,22 @@ const AddProduct = () => {
       formData.append('product', image);
   
       // Upload the image
-      const uploadResponse = await apiRequest('/product/upload', 'POST', formData, {
-        Accept: 'application/json',
+      const uploadResponse = await fetch(`https://e-commerce-website-1-unv3.onrender.com/product/upload`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+        },
+        body: formData,
       });
   
-      if (uploadResponse.success) {
-        const uploadedImage = uploadResponse.image;
+      if (!uploadResponse.ok) {
+        throw new Error("Failed to upload image.");
+      }
+  
+      const uploadData = await uploadResponse.json();
+  
+      if (uploadData.success) {
+        const uploadedImage = uploadData.image;
   
         // Update product details with the uploaded image
         const updatedDetails = {
@@ -49,12 +58,22 @@ const AddProduct = () => {
         setProductDetails(updatedDetails);
   
         // Add the product
-        const addProductResponse = await apiRequest('/product/addproduct', 'POST', JSON.stringify(updatedDetails), {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
+        const addProductResponse = await fetch(`https://e-commerce-website-1-unv3.onrender.com/product/addproduct`, {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(updatedDetails),
         });
   
-        if (addProductResponse.success) {
+        if (!addProductResponse.ok) {
+          throw new Error("Failed to add product.");
+        }
+  
+        const addProductData = await addProductResponse.json();
+  
+        if (addProductData.success) {
           // Show success toast
           toast.success("Product added successfully!", { autoClose: 500 });
         } else {
@@ -70,6 +89,7 @@ const AddProduct = () => {
       toast.error("An error occurred. Please try again later.");
     }
   };
+  
   return (
     <div className='add-product'>
       <div className='addproduct-itemfield'>
